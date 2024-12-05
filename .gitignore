@@ -1,0 +1,16 @@
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/editor-specific files
+.idea/
+.vscode/
+
+# Ignore vendor folder (if you're using Composer)
+/vendor/
+
+# Ignore log files
+*.log
+
+# Ignore runtime or temporary files
+*.tmp
