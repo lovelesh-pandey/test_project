@@ -1,4 +1,7 @@
 <?php
+// Variable to check if the form was submitted
+$formSubmitted = false;
+
 // Handling form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Collect form data
@@ -6,7 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $message = $_POST['message'];
 
-    // Display the collected data (You can also process this data, like storing it in a database or sending an email)
+    // You can process or store the data here (e.g., send an email or save to a database)
+
+    // Mark the form as submitted
+    $formSubmitted = true;
+
+    // Display the collected data (Optional: you can remove this or change it to a success message)
     echo "<h2>Your Submitted Data:</h2>";
     echo "Name: " . htmlspecialchars($name) . "<br>";
     echo "Email: " . htmlspecialchars($email) . "<br>";
@@ -50,6 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         button:hover {
             background-color: #45a049;
         }
+        #successMessage {
+            color: green;
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
@@ -57,19 +69,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1>Contact Us</h1>
     <p>Please fill out the form below and we'll get back to you as soon as possible.</p>
 
-    <!-- Contact Form -->
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+    <!-- Success message, shown if the form was submitted -->
+    <?php if ($formSubmitted): ?>
+        <div id="successMessage">
+            <p>Thank you for your message, we will get back to you shortly!</p>
+        </div>
+    <?php else: ?>
+        <!-- Contact Form -->
+        <form id="contactForm" method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" onsubmit="hideForm()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
 
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
 
-        <button type="submit">Submit</button>
-    </form>
+            <button type="submit">Submit</button>
+        </form>
+    <?php endif; ?>
+
+    <script>
+        // Function to hide the form after submission
+        function hideForm() {
+            document.getElementById("contactForm").style.display = "none";
+        }
+    </script>
 
 </body>
 </html>
